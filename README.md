@@ -5,5 +5,6 @@
 ### Setup
 
 1. Clone the repository
-2. Run `pnpm install` to install dependencies
-3. Run `pnpm dev` to start the development server
+2. Go inside the `automate-bookings` folder
+3. Run `pnpm install` to install dependencies
+4. Run `pnpm dev` to start the development server
