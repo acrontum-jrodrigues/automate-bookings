@@ -186,10 +186,9 @@ function App() {
         <li>Go to the "Outlook Calendar" section on the left bar</li>
         <li>Click on the first item "GET my events for the next week"</li>
         <li>
-          Change the URL on the textbox for the dates you want AND the
-          additional fields required (start, end are required for the
-          integration). E.g.
-          https://graph.microsoft.com/v1.0/me/calendarview?startdatetime=2023-05-03T11:30:35.302Z&enddatetime=2023-05-10T11:30:35.302Z&$select=subject,categories,start,end
+          Change the URL on the textbox to this one
+          https://graph.microsoft.com/v1.0/me/calendarview?startdatetime=2023-05-03T11:30:35.302Z&enddatetime=2023-05-10T11:30:35.302Z&$select=subject,categories,start,end&$top=100.
+          Change the dates for the time interval you want to sync
         </li>
         <li>Copy the JSON result and paste it on the textarea below</li>
         <li>Click on the button to parse</li>
