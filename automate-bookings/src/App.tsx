@@ -136,6 +136,8 @@ function App() {
     (newMeetings[meetingIndex] as any).billing = billingOption.billing;
     (newMeetings[meetingIndex] as any).project = billingOption.project;
     setMeetings(newMeetings);
+
+    console.log(meetings);
   };
 
   const formatToScript = () => {
@@ -235,7 +237,11 @@ function App() {
                       <td>{meeting.end}</td>
                       <td>{meeting.duration}</td>
                       <td>
-                        <select>
+                        <select
+                          onChange={(e) =>
+                            assignBilling(index, JSON.parse(e.target.value))
+                          }
+                        >
                           {projectsBillings.map((billingOption) => {
                             return (
                               <option
@@ -243,9 +249,7 @@ function App() {
                                   billingOption.project === meeting.project &&
                                   billingOption.billing === meeting.billing
                                 }
-                                onClick={() =>
-                                  assignBilling(index, billingOption)
-                                }
+                                value={JSON.stringify(billingOption)}
                               >
                                 {billingOption.project} -{" "}
                                 {billingOption.billing}
