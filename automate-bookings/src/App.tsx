@@ -100,13 +100,9 @@ function App() {
 
         return {
           subject,
-          startDate: new Date(`${startDay}/${startMonth}/${startYear}`)
-            .toLocaleDateString("en-GB", {
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric",
-            })
-            .replaceAll("/", "."),
+          startDate: `${String(startDay).padStart(2, "0")}.${String(
+            startMonth
+          ).padStart(2, "0")}.${String(startYear).padStart(2, "0")}`,
           start: startString,
           end: endString,
           category: "meeting",
@@ -136,8 +132,6 @@ function App() {
     (newMeetings[meetingIndex] as any).billing = billingOption.billing;
     (newMeetings[meetingIndex] as any).project = billingOption.project;
     setMeetings(newMeetings);
-
-    console.log(meetings);
   };
 
   const formatToScript = () => {
@@ -150,16 +144,6 @@ function App() {
       alert("Please assign a billing to all meetings");
       return;
     }
-
-    meetings.sort((a: any, b: any) => {
-      if (a.startDate < b.startDate) {
-        return -1;
-      }
-      if (a.startDate > b.startDate) {
-        return 1;
-      }
-      return 0;
-    });
 
     const script = meetings.map((meeting: any) => {
       const { subject, duration, project, billing, startDate } = meeting;
