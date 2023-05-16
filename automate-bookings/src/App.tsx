@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import Instructions from "./components/Instructions";
+import logEntries from "./scripts/billing";
 
 const projectsBillings = [
   {
@@ -8,44 +9,24 @@ const projectsBillings = [
     billing: "",
   },
   {
-    project: "Bespoke Conception",
-    billing: "RRMC BNSP Bespoke North Star Project - workshops",
+    project: "DDF_DRY Day Wednesday",
+    billing: "Cycle 11",
   },
   {
-    project: "Recruitment",
-    billing: "Recruitment - Data Analyst",
+    project: "NHB_New HUB",
+    billing: "Research and Planning",
   },
   {
-    project: "Aftersales Online System",
+    project: "SLWA_Stock Locator Web App",
+    billing: "May 2023",
+  },
+  {
+    project: "INTE_Acrontum Intern",
+    billing: "Development",
+  },
+  {
+    project: "INTE_Acrontum Intern",
     billing: "General",
-  },
-  {
-    project: "Product Development",
-    billing: "Gather product ideas",
-  },
-  {
-    project: "Acrontum Intern",
-    billing: "Onboarding",
-  },
-  {
-    project: "Acrontum Intern",
-    billing: "Internal Systems",
-  },
-  {
-    project: "Acrontum Intern",
-    billing: "Information security",
-  },
-  {
-    project: "DRY Day Wednesday",
-    billing: "Cycle 7",
-  },
-  {
-    project: "Acrontum Intern",
-    billing: "^General",
-  },
-  {
-    project: "Acrontum Intern",
-    billing: "Consulting",
   },
 ];
 
@@ -137,8 +118,6 @@ function App() {
     (newMeetings[meetingIndex] as any).billing = billingOption.billing;
     (newMeetings[meetingIndex] as any).project = billingOption.project;
     setMeetings(newMeetings);
-
-    console.log(meetings);
   };
 
   const formatToScript = () => {
@@ -163,14 +142,20 @@ function App() {
     });
 
     const script = meetings.map((meeting: any) => {
-      const { subject, duration, project, billing, startDate } = meeting;
+      const { subject, duration, project, billing, startDate, category } =
+        meeting;
       const description = subject;
-      const billingType = "dev";
 
-      return `'${startDate}|${project}|${billing}|${description}|${duration}|${billingType}'`;
+      return `'${startDate}|${project}|${billing}|${description}|${duration}|${category}'`;
     });
 
     setScriptInput(script.join(",\n"));
+  };
+
+  const executeScript = async () => {
+    formatToScript();
+
+    await logEntries(scriptInput.split(",\n"));
   };
 
   return (
@@ -238,8 +223,10 @@ function App() {
                 })}
               </tbody>
             </table>
-
-            <button onClick={formatToScript}>Format to script</button>
+            <div style={{ display: "flex", justifyContent: "center", gap: 16 }}>
+              <button onClick={formatToScript}>Format to script</button>
+              <button onClick={executeScript}>Execute script</button>
+            </div>
           </>
         ) : (
           <></>
